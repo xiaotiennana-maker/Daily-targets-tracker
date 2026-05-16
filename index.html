@@ -345,8 +345,8 @@ function drawChart(canvas,data){
   });
 }
 
-// Pomodoro
 let pIdx=0,pSecs=25*60,pRun=false,pTimer=null,pSess=0,audioCtx=null;
+let pStartTime=null; // when the timer was started
 const PC=2*Math.PI*44;
 
 function unlockAudio(){
@@ -374,6 +374,22 @@ function flash(){
   let count=0;
   const iv=setInterval(()=>{el.style.opacity=count%2===0?"0.6":"0";count++;if(count>=8){clearInterval(iv);el.remove();}},150);
 }
+
+function startTimer(){
+  clearInterval(pTimer);
+  pStartTime=Date.now();
+  store("dt-pomo-start",pStartTime);
+  store("dt-pomo-secs",pSecs);
+  store("dt-pomo-idx",pIdx);
+  pTimer=setInterval(()=>{
+    if(pSecs>0){pSecs--;}
+    else{clearInterval(pTimer);pRun=false;pStartTime=null;
+      store("dt-pomo-start",null);
+      if(pIdx===0)pSess++;beep();flash();showTimeout();}
+    updPomo();
+  },1000);
+}
+
 function updPomo(){
   const m=PM[pIdx],pct=1-pSecs/(m.m*60);
   document.getElementById("pArc").setAttribute("stroke",m.b);
@@ -390,17 +406,60 @@ function updPomo(){
   if(pSess>0){sb.style.display="inline";sb.textContent=pSess+(pSess===1?" session":" sessions");}
   else sb.style.display="none";
 }
-function swPomo(i){clearInterval(pTimer);pRun=false;pIdx=i;pSecs=PM[i].m*60;updPomo();}
+
+function showTimeout(){
+  // Turn ring red and show "Time's up!"
+  document.getElementById("pArc").setAttribute("stroke","#E53935");
+  document.getElementById("pTime").setAttribute("fill","#E53935");
+  document.getElementById("pTime").textContent="00:00";
+  document.getElementById("pLbl").textContent="Time's up!";
+  document.getElementById("pLbl").setAttribute("fill","#E53935");
+  document.getElementById("pBtn").style.background="#E53935";
+}
+
+function swPomo(i){
+  clearInterval(pTimer);pRun=false;pIdx=i;pSecs=PM[i].m*60;pStartTime=null;
+  // Reset text colors
+  document.getElementById("pTime").setAttribute("fill","#1a1a1a");
+  document.getElementById("pLbl").setAttribute("fill","#aaa");
+  store("dt-pomo-start",null);updPomo();
+}
 function togPomo(){
   unlockAudio();pRun=!pRun;
-  if(pRun){pTimer=setInterval(()=>{if(pSecs>0){pSecs--;}else{clearInterval(pTimer);pRun=false;if(pIdx===0)pSess++;beep();flash();}updPomo();},1000);}
-  else clearInterval(pTimer);
+  if(pRun){startTimer();}
+  else{clearInterval(pTimer);store("dt-pomo-start",null);store("dt-pomo-secs",pSecs);}
   updPomo();
 }
-function rstPomo(){clearInterval(pTimer);pRun=false;pSecs=PM[pIdx].m*60;updPomo();}
+function rstPomo(){
+  clearInterval(pTimer);pRun=false;pSecs=PM[pIdx].m*60;pStartTime=null;
+  // Reset text colors
+  document.getElementById("pTime").setAttribute("fill","#1a1a1a");
+  document.getElementById("pLbl").setAttribute("fill","#aaa");
+  store("dt-pomo-start",null);updPomo();
+}
 
+// When user comes back to the app, recalculate elapsed time
 document.addEventListener("visibilitychange",()=>{
-  if(document.visibilityState==="hidden"){store("dt-day-"+tKey(),td);store("dt-tgts",targets);store("dt-hist",history);}
+  if(document.visibilityState==="visible"&&pRun&&pStartTime){
+    clearInterval(pTimer);
+    const elapsed=Math.floor((Date.now()-pStartTime)/1000);
+    const savedSecs=recall("dt-pomo-secs",pSecs);
+    pSecs=Math.max(0, savedSecs-elapsed);
+    if(pSecs<=0){
+      pRun=false;pStartTime=null;store("dt-pomo-start",null);
+      if(pIdx===0)pSess++;beep();flash();
+      updPomo();
+    } else {
+      pStartTime=Date.now();
+      store("dt-pomo-start",pStartTime);
+      store("dt-pomo-secs",pSecs);
+      startTimer();
+    }
+  }
+  if(document.visibilityState==="hidden"){
+    store("dt-day-"+tKey(),td);store("dt-tgts",targets);store("dt-hist",history);
+    if(pRun){store("dt-pomo-secs",pSecs);store("dt-pomo-start",pStartTime);}
+  }
 });
 window.addEventListener("pagehide",()=>{store("dt-day-"+tKey(),td);store("dt-tgts",targets);store("dt-hist",history);});
 
