@@ -8,7 +8,6 @@
 <meta name="apple-mobile-web-app-title" content="Daily Targets">
 <meta name="theme-color" content="#1D9E75">
 <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 380 380'%3E%3Crect x='40' y='40' width='300' height='300' rx='64' fill='%231D9E75'/%3E%3Ccircle cx='190' cy='190' r='80' fill='none' stroke='white' stroke-width='9' opacity='0.35'/%3E%3Ccircle cx='190' cy='190' r='54' fill='none' stroke='white' stroke-width='9' opacity='0.6'/%3E%3Ccircle cx='190' cy='190' r='28' fill='none' stroke='white' stroke-width='9' opacity='0.9'/%3E%3Ccircle cx='190' cy='190' r='11' fill='%23FF8A80'/%3E%3Cline x1='190' y1='80' x2='190' y2='102' stroke='white' stroke-width='6' stroke-linecap='round' opacity='0.4'/%3E%3Cline x1='190' y1='278' x2='190' y2='300' stroke='white' stroke-width='6' stroke-linecap='round' opacity='0.4'/%3E%3Cline x1='80' y1='190' x2='102' y2='190' stroke='white' stroke-width='6' stroke-linecap='round' opacity='0.4'/%3E%3Cline x1='278' y1='190' x2='300' y2='190' stroke='white' stroke-width='6' stroke-linecap='round' opacity='0.4'/%3E%3C/svg%3E">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 380 380'%3E%3Crect x='40' y='40' width='300' height='300' rx='64' fill='%231D9E75'/%3E%3Ccircle cx='190' cy='190' r='80' fill='none' stroke='white' stroke-width='9' opacity='0.35'/%3E%3Ccircle cx='190' cy='190' r='54' fill='none' stroke='white' stroke-width='9' opacity='0.6'/%3E%3Ccircle cx='190' cy='190' r='28' fill='none' stroke='white' stroke-width='9' opacity='0.9'/%3E%3Ccircle cx='190' cy='190' r='11' fill='%23FF8A80'/%3E%3Cline x1='190' y1='80' x2='190' y2='102' stroke='white' stroke-width='6' stroke-linecap='round' opacity='0.4'/%3E%3Cline x1='190' y1='278' x2='190' y2='300' stroke='white' stroke-width='6' stroke-linecap='round' opacity='0.4'/%3E%3Cline x1='80' y1='190' x2='102' y2='190' stroke='white' stroke-width='6' stroke-linecap='round' opacity='0.4'/%3E%3Cline x1='278' y1='190' x2='300' y2='190' stroke='white' stroke-width='6' stroke-linecap='round' opacity='0.4'/%3E%3C/svg%3E">
 <title>Daily Targets</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
@@ -16,15 +15,24 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .app{max-width:480px;margin:0 auto;padding:20px 16px 80px}
 .day-label{font-size:11px;font-weight:600;letter-spacing:.08em;color:#aaa;text-transform:uppercase;margin-bottom:4px}
 h1{font-size:22px;font-weight:600;margin-bottom:2px}
-.date-sub{font-size:13px;color:#888;margin-bottom:20px}
+.date-sub{font-size:13px;color:#888;margin-bottom:16px}
 .tabs{display:flex;background:#e8e8e8;border-radius:10px;padding:3px;margin-bottom:20px}
 .tab{flex:1;padding:8px 0;border:none;border-radius:8px;background:transparent;font-size:13px;font-weight:500;color:#888;cursor:pointer;transition:all .15s}
 .tab.active{background:#fff;color:#1a1a1a;box-shadow:0 1px 3px rgba(0,0,0,0.1)}
 .top-row{display:flex;gap:12px;margin-bottom:20px}
 .card{background:#fff;border-radius:14px;padding:14px;border:1px solid rgba(0,0,0,0.06);box-shadow:0 1px 4px rgba(0,0,0,0.04)}
-.ring-card{flex:1;display:flex;flex-direction:column;align-items:center;gap:8px}
+.ring-card{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px}
 .pomo-card{flex:1;display:flex;flex-direction:column;align-items:center;gap:8px}
 .count-lbl{font-size:13px;font-weight:600}
+/* Crown banner */
+.crown-banner{background:#fff;border-radius:14px;border:1px solid rgba(0,0,0,0.06);padding:14px 16px;margin-bottom:16px;display:flex;align-items:center;gap:12px}
+.crown-icon{font-size:36px;line-height:1}
+.crown-info{flex:1}
+.crown-title{font-size:15px;font-weight:600;margin-bottom:2px}
+.crown-sub{font-size:12px;color:#888}
+.crown-score{font-size:22px;font-weight:700;color:#1D9E75}
+.pts-bar-wrap{height:6px;background:#eee;border-radius:3px;margin-top:6px;overflow:hidden}
+.pts-bar{height:100%;border-radius:3px;transition:width .4s}
 .t-item{display:flex;align-items:center;gap:12px;padding:12px 14px;background:#fff;border:1px solid rgba(0,0,0,0.06);border-left:3px solid #ddd;border-radius:10px;margin-bottom:7px;box-shadow:0 1px 3px rgba(0,0,0,0.03)}
 .chk{width:24px;height:24px;min-width:24px;border-radius:50%;border:2px solid #ddd;background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s}
 .t-lbl{flex:1;font-size:14px;transition:all .15s}
@@ -56,10 +64,22 @@ h1{font-size:22px;font-weight:600;margin-bottom:2px}
 .h-dot{width:9px;height:9px;min-width:9px;border-radius:50%}
 .h-date{flex:1;font-size:13px}
 .h-score{font-size:13px;font-weight:600;min-width:36px;text-align:right}
-.h-count{font-size:12px;color:#aaa;min-width:36px;text-align:right}
+.h-pts{font-size:12px;font-weight:600;min-width:52px;text-align:right}
 .h-bar-w{width:55px;height:5px;border-radius:3px;background:#eee;overflow:hidden}
 .h-bar{height:100%;border-radius:3px}
 .empty{text-align:center;padding:20px;color:#aaa;font-size:13px}
+.streak-box{display:flex;gap:8px;margin-bottom:16px}
+.streak-card{flex:1;background:#fff;border-radius:12px;border:1px solid rgba(0,0,0,0.06);padding:12px;text-align:center}
+.streak-num{font-size:22px;font-weight:700;color:#1D9E75}
+.streak-lbl{font-size:11px;color:#aaa;margin-top:2px}
+/* Score popup */
+.score-popup{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#fff;border-radius:20px;padding:28px 32px;text-align:center;z-index:9999;box-shadow:0 8px 40px rgba(0,0,0,0.18);min-width:260px}
+.score-popup h2{font-size:20px;font-weight:700;margin-bottom:8px}
+.score-popup .pts{font-size:36px;font-weight:700;color:#1D9E75;margin:8px 0}
+.score-popup .crown-earned{font-size:48px;margin:8px 0}
+.score-popup p{font-size:13px;color:#888;margin-bottom:16px}
+.score-popup button{padding:10px 28px;border:none;border-radius:10px;background:#1D9E75;color:#fff;font-size:14px;font-weight:600;cursor:pointer}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,0.3);z-index:9998}
 </style>
 </head>
 <body>
@@ -67,12 +87,24 @@ h1{font-size:22px;font-weight:600;margin-bottom:2px}
   <div class="day-label" id="dayLbl"></div>
   <h1>Daily targets</h1>
   <div class="date-sub" id="dateSub"></div>
+
   <div class="tabs">
     <button class="tab active" onclick="setView('today')">Today</button>
     <button class="tab" onclick="setView('history')">History</button>
   </div>
 
   <div id="v-today">
+    <!-- Crown banner -->
+    <div class="crown-banner card" id="crownBanner">
+      <div class="crown-icon" id="crownIcon">🎯</div>
+      <div class="crown-info">
+        <div class="crown-title" id="crownTitle">Keep going!</div>
+        <div class="crown-sub" id="crownSub">Earn 200 pts for Bronze Crown</div>
+        <div class="pts-bar-wrap"><div class="pts-bar" id="ptsBar" style="width:0%;background:#1D9E75"></div></div>
+      </div>
+      <div class="crown-score" id="crownScore">0</div>
+    </div>
+
     <div class="top-row">
       <div class="card ring-card">
         <svg width="80" height="80" viewBox="0 0 88 88">
@@ -111,7 +143,7 @@ h1{font-size:22px;font-weight:600;margin-bottom:2px}
       <button class="add-btn" onclick="openForm()">+ Add</button>
       <button class="save-btn" id="svBtn" onclick="saveDay()">💾 Save today</button>
     </div>
-    <div class="save-hint">Tap "Save today" to record in History</div>
+    <div class="save-hint">Tap "Save today" to record in History & earn points</div>
 
     <div class="form-box" id="addForm" style="display:none">
       <div><label>Name</label><input id="fName" placeholder="e.g. Morning walk"/></div>
@@ -140,10 +172,25 @@ h1{font-size:22px;font-weight:600;margin-bottom:2px}
   </div>
 
   <div id="v-history" style="display:none">
+    <div class="streak-box">
+      <div class="streak-card">
+        <div class="streak-num" id="hStreak">0</div>
+        <div class="streak-lbl">day streak 🔥</div>
+      </div>
+      <div class="streak-card">
+        <div class="streak-num" id="hMonthPts" style="color:#BA7517">0</div>
+        <div class="streak-lbl">pts this month</div>
+      </div>
+      <div class="streak-card">
+        <div class="streak-num" id="hBestStreak">0</div>
+        <div class="streak-lbl">best streak</div>
+      </div>
+    </div>
+
     <div class="h-box">
       <div class="h-box-title">Completion over time</div>
       <canvas id="hChart" width="440" height="200" style="width:100%;height:auto;display:none"></canvas>
-      <div id="hEmpty" class="empty">Save on 2+ days to see your chart</div>
+      <div id="hEmpty" class="empty">Save on 2+ days to see chart</div>
     </div>
     <div id="hList"></div>
   </div>
@@ -173,6 +220,15 @@ const DEF=[
   {id:9, g:"work",    l:"Check my finance",           t:"check"},
 ];
 
+// Crown levels
+const CROWNS=[
+  {min:0,   max:200,  icon:"🎯", title:"Keep going!",    color:"#888"},
+  {min:200, max:500,  icon:"🥉", title:"Bronze Crown",   color:"#CD7F32"},
+  {min:500, max:1000, icon:"🥈", title:"Silver Crown",   color:"#A0A0A0"},
+  {min:1000,max:2000, icon:"🥇", title:"Gold Crown",     color:"#FFD700"},
+  {min:2000,max:99999,icon:"💎", title:"Diamond Crown",  color:"#00BFFF"},
+];
+
 function store(k,v){
   const s=JSON.stringify(v);
   try{localStorage.setItem(k,s);}catch{}
@@ -189,6 +245,7 @@ function recall(k,def){
 }
 
 function tKey(){return new Date().toISOString().slice(0,10);}
+function monthKey(){const n=new Date();return `${n.getFullYear()}-${String(n.getMonth()+1).padStart(2,"0")}`;}
 function pad(n){return String(n).padStart(2,"0");}
 
 let targets=recall("dt-tgts",null)||JSON.parse(JSON.stringify(DEF));
@@ -196,7 +253,14 @@ targets=targets.map(t=>t.id===10?{...t,l:"Exercise",t:"progress",goal:30,unit:"m
 store("dt-tgts",targets);
 let history=recall("dt-hist",{});
 let td=recall("dt-day-"+tKey(),{});
+let scores=recall("dt-scores",{});  // {monthKey: totalPts}
+let dayPts=recall("dt-daypts",{});  // {dateKey: pts earned that day}
 
+// Reset scores if new month
+const curMonth=monthKey();
+if(!scores[curMonth])scores[curMonth]=0;
+
+// Auto-commit past days
 (function(){
   try{
     const keys=Object.keys(localStorage).filter(k=>k.startsWith("dt-day-"));
@@ -226,6 +290,56 @@ function setView(v){
 
 function isDone(t,d){const v=(d||td)[t.id]||0;return t.t==="check"?v===1:v>=(t.goal||1);}
 function score(d){if(!targets.length)return 0;return Math.round(targets.filter(t=>isDone(t,d)).length/targets.length*100);}
+
+// Calculate streak
+function calcStreak(){
+  const days=Object.keys(history).sort().reverse();
+  let streak=0,best=0,cur=0;
+  const today=tKey();
+  // check if today is saved
+  let checkDate=history[today]?today:null;
+  if(!checkDate&&days.length>0){
+    // start from yesterday
+    const d=new Date(); d.setDate(d.getDate()-1);
+    checkDate=d.toISOString().slice(0,10);
+  } else if(checkDate){
+    checkDate=today;
+  }
+  const sortedDays=[...Object.keys(history)].sort().reverse();
+  for(let i=0;i<sortedDays.length;i++){
+    const sc=score(history[sortedDays[i]]);
+    if(sc>0){cur++;best=Math.max(best,cur);}
+    else{if(i===0)break;cur=0;}
+  }
+  streak=cur; best=Math.max(best,streak);
+  return{streak,best};
+}
+
+// Crown logic
+function getCrown(pts){
+  for(let i=CROWNS.length-1;i>=0;i--){if(pts>=CROWNS[i].min)return CROWNS[i];}
+  return CROWNS[0];
+}
+
+function updateCrownUI(){
+  const pts=scores[curMonth]||0;
+  const crown=getCrown(pts);
+  const next=CROWNS.find(c=>c.min>pts)||CROWNS[CROWNS.length-1];
+  document.getElementById("crownIcon").textContent=crown.icon;
+  document.getElementById("crownTitle").textContent=crown.title;
+  document.getElementById("crownScore").textContent=pts;
+  document.getElementById("crownScore").style.color=crown.color=="#888"?"#1D9E75":crown.color;
+  if(pts>=2000){
+    document.getElementById("crownSub").textContent="Maximum crown achieved! 💎";
+    document.getElementById("ptsBar").style.width="100%";
+    document.getElementById("ptsBar").style.background="#00BFFF";
+  } else {
+    document.getElementById("crownSub").textContent=`${next.min-pts} pts to ${next.title}`;
+    const pct=((pts-crown.min)/(next.min-crown.min)*100).toFixed(1);
+    document.getElementById("ptsBar").style.width=pct+"%";
+    document.getElementById("ptsBar").style.background=next.color==="#888"?"#1D9E75":next.color;
+  }
+}
 
 function renderRing(){
   const done=targets.filter(t=>isDone(t,td)).length,tot=targets.length;
@@ -278,8 +392,67 @@ function renderList(){
 function doCheck(id){td[id]=td[id]?0:1;store("dt-day-"+tKey(),td);renderRing();renderList();}
 function doProgress(id,d,goal){td[id]=Math.max(0,Math.min(goal,(td[id]||0)+d));store("dt-day-"+tKey(),td);renderRing();renderList();}
 
+// Calculate points for a day
+function calcDayPts(dayData, streakCount){
+  let pts=0;
+  const tot=targets.length;
+  const done=targets.filter(t=>isDone(t,dayData)).length;
+  pts += done * 10;
+  pts -= (tot-done) * 5;
+  if(done===tot && tot>0) pts+=20; // full day bonus
+  if(streakCount>=7) pts+=30;
+  else if(streakCount>=3) pts+=15;
+  return Math.max(pts, -(tot*5)); // can go negative but bounded
+}
+
+function showScorePopup(pts, totalPts, streak, prevCrown, newCrown){
+  const ov=document.createElement("div");ov.className="overlay";
+  const pop=document.createElement("div");pop.className="score-popup";
+  const crownChanged=prevCrown.title!==newCrown.title&&newCrown.min>0;
+  let html=`<h2>Today's result</h2>`;
+  if(pts>=0){html+=`<div class="pts" style="color:#1D9E75">+${pts} pts</div>`;}
+  else{html+=`<div class="pts" style="color:#E53935">${pts} pts</div>`;}
+  html+=`<p>Monthly total: <strong>${totalPts} pts</strong><br>Streak: <strong>${streak} days 🔥</strong></p>`;
+  if(crownChanged){html+=`<div class="crown-earned">${newCrown.icon}</div><p style="color:${newCrown.color};font-weight:600">You earned the ${newCrown.title}!</p>`;}
+  html+=`<button onclick="this.closest('.score-popup').remove();document.querySelector('.overlay').remove()">Awesome!</button>`;
+  pop.innerHTML=html;
+  document.body.appendChild(ov);document.body.appendChild(pop);
+  ov.onclick=()=>{pop.remove();ov.remove();};
+}
+
 function saveDay(){
-  history[tKey()]={...td};store("dt-hist",history);store("dt-tgts",targets);
+  const key=tKey();
+  const prevCrown=getCrown(scores[curMonth]||0);
+
+  // Calculate streak up to today
+  const allDays=[...Object.keys(history),key].sort().reverse();
+  let streak=0;
+  for(let i=0;i<allDays.length;i++){
+    const d=i===0?td:history[allDays[i]];
+    if(score(d||{})>0)streak++;
+    else break;
+  }
+
+  const pts=calcDayPts(td,streak);
+
+  // Update monthly score
+  if(!scores[curMonth])scores[curMonth]=0;
+  scores[curMonth]=Math.max(0,scores[curMonth]+pts);
+
+  // Save day pts
+  dayPts[key]=pts;
+
+  // Save history
+  history[key]={...td};
+  store("dt-hist",history);
+  store("dt-tgts",targets);
+  store("dt-scores",scores);
+  store("dt-daypts",dayPts);
+
+  const newCrown=getCrown(scores[curMonth]);
+  updateCrownUI();
+  showScorePopup(pts, scores[curMonth], streak, prevCrown, newCrown);
+
   const b=document.getElementById("svBtn");
   b.textContent="✓ Saved!";b.style.background="#0F6E56";
   setTimeout(()=>{b.textContent="💾 Save today";b.style.background="#1D9E75";},2000);
@@ -300,24 +473,33 @@ function addTarget(){
 }
 
 function renderHist(){
+  const {streak,best}=calcStreak();
+  document.getElementById("hStreak").textContent=streak;
+  document.getElementById("hBestStreak").textContent=best;
+  document.getElementById("hMonthPts").textContent=scores[curMonth]||0;
+
   const days=Object.keys(history).sort();
   const canvas=document.getElementById("hChart"),empty=document.getElementById("hEmpty");
   if(days.length>=2){canvas.style.display="block";empty.style.display="none";drawChart(canvas,days.map(d=>({date:d,s:score(history[d])})));}
   else{canvas.style.display="none";empty.style.display="block";}
+
   const list=document.getElementById("hList");list.innerHTML="";
   const tot=targets.length;
   [...days].reverse().slice(0,30).forEach(day=>{
     const d=history[day]||{},sc=score(d),dn=targets.filter(t=>isDone(t,d)).length;
+    const pts=dayPts[day]||0;
     const dt=new Date(day+"T00:00:00");
     const ds=dt.toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric"});
     const dotC=sc===100?"#1D9E75":sc>=50?"#BA7517":"#ccc";
     const scC=sc===100?"#0F6E56":sc>=50?"#633806":"#aaa";
     const barC=sc===100?"#1D9E75":"#BA7517";
+    const ptsC=pts>=0?"#0F6E56":"#E53935";
+    const ptsStr=pts>=0?"+"+pts:String(pts);
     const row=document.createElement("div");row.className="h-item";
     row.innerHTML=`<div class="h-dot" style="background:${dotC}"></div>
       <div class="h-date">${ds}</div>
       <div class="h-score" style="color:${scC}">${sc}%</div>
-      <div class="h-count">${dn}/${tot}</div>
+      <div class="h-pts" style="color:${ptsC};font-size:12px;font-weight:600;min-width:52px;text-align:right">${ptsStr} pts</div>
       <div class="h-bar-w"><div class="h-bar" style="width:${sc}%;background:${barC}"></div></div>`;
     list.appendChild(row);
   });
@@ -347,8 +529,8 @@ function drawChart(canvas,data){
   });
 }
 
-let pIdx=0,pSecs=25*60,pRun=false,pTimer=null,pSess=0,audioCtx=null;
-let pStartTime=null; // when the timer was started
+// Pomodoro
+let pIdx=0,pSecs=25*60,pRun=false,pTimer=null,pSess=0,audioCtx=null,pStartTime=null;
 const PC=2*Math.PI*44;
 
 function unlockAudio(){
@@ -376,7 +558,14 @@ function flash(){
   let count=0;
   const iv=setInterval(()=>{el.style.opacity=count%2===0?"0.6":"0";count++;if(count>=8){clearInterval(iv);el.remove();}},150);
 }
-
+function showTimeout(){
+  document.getElementById("pArc").setAttribute("stroke","#E53935");
+  document.getElementById("pTime").setAttribute("fill","#E53935");
+  document.getElementById("pTime").textContent="00:00";
+  document.getElementById("pLbl").textContent="Time's up!";
+  document.getElementById("pLbl").setAttribute("fill","#E53935");
+  document.getElementById("pBtn").style.background="#E53935";
+}
 function startTimer(){
   clearInterval(pTimer);
   pStartTime=Date.now();
@@ -385,13 +574,10 @@ function startTimer(){
   store("dt-pomo-idx",pIdx);
   pTimer=setInterval(()=>{
     if(pSecs>0){pSecs--;}
-    else{clearInterval(pTimer);pRun=false;pStartTime=null;
-      store("dt-pomo-start",null);
-      if(pIdx===0)pSess++;beep();flash();showTimeout();}
+    else{clearInterval(pTimer);pRun=false;pStartTime=null;store("dt-pomo-start",null);if(pIdx===0)pSess++;beep();flash();showTimeout();}
     updPomo();
   },1000);
 }
-
 function updPomo(){
   const m=PM[pIdx],pct=1-pSecs/(m.m*60);
   document.getElementById("pArc").setAttribute("stroke",m.b);
@@ -408,20 +594,8 @@ function updPomo(){
   if(pSess>0){sb.style.display="inline";sb.textContent=pSess+(pSess===1?" session":" sessions");}
   else sb.style.display="none";
 }
-
-function showTimeout(){
-  // Turn ring red and show "Time's up!"
-  document.getElementById("pArc").setAttribute("stroke","#E53935");
-  document.getElementById("pTime").setAttribute("fill","#E53935");
-  document.getElementById("pTime").textContent="00:00";
-  document.getElementById("pLbl").textContent="Time's up!";
-  document.getElementById("pLbl").setAttribute("fill","#E53935");
-  document.getElementById("pBtn").style.background="#E53935";
-}
-
 function swPomo(i){
   clearInterval(pTimer);pRun=false;pIdx=i;pSecs=PM[i].m*60;pStartTime=null;
-  // Reset text colors
   document.getElementById("pTime").setAttribute("fill","#1a1a1a");
   document.getElementById("pLbl").setAttribute("fill","#aaa");
   store("dt-pomo-start",null);updPomo();
@@ -434,43 +608,31 @@ function togPomo(){
 }
 function rstPomo(){
   clearInterval(pTimer);pRun=false;pSecs=PM[pIdx].m*60;pStartTime=null;
-  // Reset text colors
   document.getElementById("pTime").setAttribute("fill","#1a1a1a");
   document.getElementById("pLbl").setAttribute("fill","#aaa");
   store("dt-pomo-start",null);updPomo();
 }
 
-// When user comes back to the app, recalculate elapsed time
 document.addEventListener("visibilitychange",()=>{
   if(document.visibilityState==="visible"&&pRun&&pStartTime){
     clearInterval(pTimer);
     const elapsed=Math.floor((Date.now()-pStartTime)/1000);
     const savedSecs=recall("dt-pomo-secs",pSecs);
-    pSecs=Math.max(0, savedSecs-elapsed);
-    if(pSecs<=0){
-      pRun=false;pStartTime=null;store("dt-pomo-start",null);
-      if(pIdx===0)pSess++;beep();flash();
-      updPomo();
-    } else {
-      pStartTime=Date.now();
-      store("dt-pomo-start",pStartTime);
-      store("dt-pomo-secs",pSecs);
-      startTimer();
-    }
+    pSecs=Math.max(0,savedSecs-elapsed);
+    if(pSecs<=0){pRun=false;pStartTime=null;store("dt-pomo-start",null);if(pIdx===0)pSess++;beep();flash();showTimeout();updPomo();}
+    else{pStartTime=Date.now();store("dt-pomo-start",pStartTime);store("dt-pomo-secs",pSecs);startTimer();}
   }
   if(document.visibilityState==="hidden"){
     store("dt-day-"+tKey(),td);store("dt-tgts",targets);store("dt-hist",history);
     if(pRun){store("dt-pomo-secs",pSecs);store("dt-pomo-start",pStartTime);}
   }
 });
-window.addEventListener("pagehide",()=>{store("dt-day-"+tKey(),td);store("dt-tgts",targets);store("dt-hist",history);});
+window.addEventListener("pagehide",()=>{
+  store("dt-day-"+tKey(),td);store("dt-tgts",targets);store("dt-hist",history);
+  store("dt-scores",scores);store("dt-daypts",dayPts);
+});
 
-// Service Worker for offline use
-if("serviceWorker" in navigator){
-  navigator.serviceWorker.register("sw.js").catch(()=>{});
-}
-
-renderRing();renderList();updPomo();
+renderRing();renderList();updPomo();updateCrownUI();
 </script>
 </body>
 </html>
