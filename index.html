@@ -7,7 +7,19 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Daily Targets">
 <meta name="theme-color" content="#1D9E75">
-<link rel="apple-touch-icon" href="icon.png">
+<script>
+(function(){
+  const c=document.createElement("canvas");c.width=512;c.height=512;
+  const x=c.getContext("2d"),s=512,cx=256,cy=256;
+  function rr(a,b,w,h,r){x.beginPath();x.moveTo(a+r,b);x.lineTo(a+w-r,b);x.arcTo(a+w,b,a+w,b+r,r);x.lineTo(a+w,b+h-r);x.arcTo(a+w,b+h,a+w-r,b+h,r);x.lineTo(a+r,b+h);x.arcTo(a,b+h,a,b+h-r,r);x.lineTo(a,b+r);x.arcTo(a,b,a+r,b,r);x.closePath();}
+  rr(0,0,s,s,112);x.fillStyle="#1D9E75";x.fill();
+  [[108,"rgba(255,255,255,0.35)"],[73,"rgba(255,255,255,0.6)"],[38,"rgba(255,255,255,0.9)"]].forEach(([r,col])=>{x.beginPath();x.arc(cx,cy,r,0,Math.PI*2);x.strokeStyle=col;x.lineWidth=13;x.stroke();});
+  x.beginPath();x.arc(cx,cy,15,0,Math.PI*2);x.fillStyle="#FF8A80";x.fill();
+  [[cx,40,cx,110],[cx,402,cx,472],[40,cy,110,cy],[402,cy,472,cy]].forEach(([a,b,c,d])=>{x.beginPath();x.moveTo(a,b);x.lineTo(c,d);x.strokeStyle="rgba(255,255,255,0.4)";x.lineWidth=8;x.lineCap="round";x.stroke();});
+  const url=c.toDataURL("image/png");
+  document.write('<link rel="apple-touch-icon" href="'+url+'"><link rel="icon" href="'+url+'">');
+})();
+</script>
 <title>Daily Targets</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
@@ -24,7 +36,6 @@ h1{font-size:22px;font-weight:600;margin-bottom:2px}
 .ring-card{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px}
 .pomo-card{flex:1;display:flex;flex-direction:column;align-items:center;gap:8px}
 .count-lbl{font-size:13px;font-weight:600}
-/* Crown banner */
 .crown-banner{background:#fff;border-radius:14px;border:1px solid rgba(0,0,0,0.06);padding:14px 16px;margin-bottom:16px;display:flex;align-items:center;gap:12px}
 .crown-icon{font-size:36px;line-height:1}
 .crown-info{flex:1}
@@ -35,7 +46,7 @@ h1{font-size:22px;font-weight:600;margin-bottom:2px}
 .pts-bar{height:100%;border-radius:3px;transition:width .4s}
 .t-item{display:flex;align-items:center;gap:12px;padding:12px 14px;background:#fff;border:1px solid rgba(0,0,0,0.06);border-left:3px solid #ddd;border-radius:10px;margin-bottom:7px;box-shadow:0 1px 3px rgba(0,0,0,0.03)}
 .chk{width:24px;height:24px;min-width:24px;border-radius:50%;border:2px solid #ddd;background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s}
-.t-lbl{flex:1;font-size:14px;transition:all .15s}
+.t-lbl{flex:1;font-size:14px}
 .prog-wrap{display:flex;align-items:center;gap:5px}
 .prog-btn{width:28px;height:28px;min-width:28px;border-radius:50%;border:1.5px solid #ddd;background:#fff;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;line-height:1}
 .prog-val{font-size:12px;font-weight:600;min-width:60px;text-align:center}
@@ -46,14 +57,14 @@ h1{font-size:22px;font-weight:600;margin-bottom:2px}
 .save-hint{font-size:11px;color:#bbb;text-align:center;margin-top:6px}
 .form-box{margin-top:12px;padding:16px;background:#fff;border-radius:14px;display:flex;flex-direction:column;gap:10px;border:1px solid rgba(0,0,0,0.06)}
 .form-box label{font-size:12px;color:#888;display:block;margin-bottom:4px}
-.form-box input,.form-box select{width:100%;padding:10px 12px;border:1px solid rgba(0,0,0,0.12);border-radius:8px;font-size:14px;background:#fff;color:#1a1a1a;outline:none;-webkit-appearance:none;appearance:none}
+.form-box input,.form-box select{width:100%;padding:10px 12px;border:1px solid rgba(0,0,0,0.12);border-radius:8px;font-size:14px;background:#fff;color:#1a1a1a;outline:none;-webkit-appearance:none}
 .form-row{display:flex;gap:8px}
 .form-btns{display:flex;gap:8px;margin-top:4px}
 .form-btns button{flex:1;padding:12px;border-radius:10px;font-size:14px;font-weight:500;cursor:pointer;border:1px solid rgba(0,0,0,0.1)}
 .fbtn-add{background:#f0f0f0;color:#1a1a1a}
 .fbtn-cancel{background:transparent;color:#888}
 .pomo-modes{display:flex;gap:4px;width:100%}
-.pm{flex:1;padding:5px 0;font-size:9px;font-weight:500;border-radius:99px;border:1.5px solid #e0e0e0;background:transparent;color:#999;cursor:pointer;transition:all .15s}
+.pm{flex:1;padding:5px 0;font-size:9px;font-weight:500;border-radius:99px;border:1.5px solid #e0e0e0;background:transparent;color:#999;cursor:pointer}
 .pomo-btns{display:flex;gap:8px;width:100%}
 .p-start{flex:1;padding:9px;border:none;border-radius:10px;color:#fff;font-size:12px;font-weight:600;cursor:pointer}
 .p-reset{width:36px;height:36px;border-radius:10px;border:1px solid rgba(0,0,0,0.1);background:#fff;cursor:pointer;font-size:16px;color:#888}
@@ -72,10 +83,9 @@ h1{font-size:22px;font-weight:600;margin-bottom:2px}
 .streak-card{flex:1;background:#fff;border-radius:12px;border:1px solid rgba(0,0,0,0.06);padding:12px;text-align:center}
 .streak-num{font-size:22px;font-weight:700;color:#1D9E75}
 .streak-lbl{font-size:11px;color:#aaa;margin-top:2px}
-/* Score popup */
 .score-popup{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#fff;border-radius:20px;padding:28px 32px;text-align:center;z-index:9999;box-shadow:0 8px 40px rgba(0,0,0,0.18);min-width:260px}
 .score-popup h2{font-size:20px;font-weight:700;margin-bottom:8px}
-.score-popup .pts{font-size:36px;font-weight:700;color:#1D9E75;margin:8px 0}
+.score-popup .pts{font-size:36px;font-weight:700;margin:8px 0}
 .score-popup .crown-earned{font-size:48px;margin:8px 0}
 .score-popup p{font-size:13px;color:#888;margin-bottom:16px}
 .score-popup button{padding:10px 28px;border:none;border-radius:10px;background:#1D9E75;color:#fff;font-size:14px;font-weight:600;cursor:pointer}
@@ -87,14 +97,12 @@ h1{font-size:22px;font-weight:600;margin-bottom:2px}
   <div class="day-label" id="dayLbl"></div>
   <h1>Daily targets</h1>
   <div class="date-sub" id="dateSub"></div>
-
   <div class="tabs">
     <button class="tab active" onclick="setView('today')">Today</button>
     <button class="tab" onclick="setView('history')">History</button>
   </div>
 
   <div id="v-today">
-    <!-- Crown banner -->
     <div class="crown-banner card" id="crownBanner">
       <div class="crown-icon" id="crownIcon">🎯</div>
       <div class="crown-info">
@@ -109,8 +117,7 @@ h1{font-size:22px;font-weight:600;margin-bottom:2px}
       <div class="card ring-card">
         <svg width="80" height="80" viewBox="0 0 88 88">
           <circle cx="44" cy="44" r="36" fill="none" stroke="#ebebeb" stroke-width="7"/>
-          <circle id="rArc" cx="44" cy="44" r="36" fill="none" stroke="#1D9E75" stroke-width="7"
-            stroke-dasharray="0 226.2" transform="rotate(-90 44 44)" stroke-linecap="round"/>
+          <circle id="rArc" cx="44" cy="44" r="36" fill="none" stroke="#1D9E75" stroke-width="7" stroke-dasharray="0 226.2" transform="rotate(-90 44 44)" stroke-linecap="round"/>
           <text id="rPct" x="44" y="41" text-anchor="middle" font-size="16" font-weight="600" fill="#1a1a1a">0%</text>
           <text x="44" y="56" text-anchor="middle" font-size="10" fill="#aaa">done</text>
         </svg>
@@ -119,8 +126,7 @@ h1{font-size:22px;font-weight:600;margin-bottom:2px}
       <div class="card pomo-card">
         <svg width="108" height="108" viewBox="0 0 108 108">
           <circle cx="54" cy="54" r="44" fill="none" stroke="#ebebeb" stroke-width="7"/>
-          <circle id="pArc" cx="54" cy="54" r="44" fill="none" stroke="#1D9E75" stroke-width="7"
-            stroke-dasharray="0 276.5" transform="rotate(-90 54 54)" stroke-linecap="round"/>
+          <circle id="pArc" cx="54" cy="54" r="44" fill="none" stroke="#1D9E75" stroke-width="7" stroke-dasharray="0 276.5" transform="rotate(-90 54 54)" stroke-linecap="round"/>
           <text id="pTime" x="54" y="50" text-anchor="middle" font-size="22" font-weight="600" fill="#1a1a1a">25:00</text>
           <text id="pLbl" x="54" y="66" text-anchor="middle" font-size="10" fill="#aaa">Focus</text>
         </svg>
@@ -138,7 +144,6 @@ h1{font-size:22px;font-weight:600;margin-bottom:2px}
     </div>
 
     <div id="tList"></div>
-
     <div class="bot-bar">
       <button class="add-btn" onclick="openForm()">+ Add</button>
       <button class="save-btn" id="svBtn" onclick="saveDay()">💾 Save today</button>
@@ -173,20 +178,10 @@ h1{font-size:22px;font-weight:600;margin-bottom:2px}
 
   <div id="v-history" style="display:none">
     <div class="streak-box">
-      <div class="streak-card">
-        <div class="streak-num" id="hStreak">0</div>
-        <div class="streak-lbl">day streak 🔥</div>
-      </div>
-      <div class="streak-card">
-        <div class="streak-num" id="hMonthPts" style="color:#BA7517">0</div>
-        <div class="streak-lbl">pts this month</div>
-      </div>
-      <div class="streak-card">
-        <div class="streak-num" id="hBestStreak">0</div>
-        <div class="streak-lbl">best streak</div>
-      </div>
+      <div class="streak-card"><div class="streak-num" id="hStreak">0</div><div class="streak-lbl">day streak 🔥</div></div>
+      <div class="streak-card"><div class="streak-num" id="hMonthPts" style="color:#BA7517">0</div><div class="streak-lbl">pts this month</div></div>
+      <div class="streak-card"><div class="streak-num" id="hBestStreak">0</div><div class="streak-lbl">best streak</div></div>
     </div>
-
     <div class="h-box">
       <div class="h-box-title">Completion over time</div>
       <canvas id="hChart" width="440" height="200" style="width:100%;height:auto;display:none"></canvas>
@@ -197,6 +192,7 @@ h1{font-size:22px;font-weight:600;margin-bottom:2px}
 </div>
 
 <script>
+// ── Constants ──────────────────────────────────────────────
 const G={
   health:  {c:"#0F6E56",bg:"#E1F5EE",b:"#1D9E75",li:"rgba(29,158,117,0.18)"},
   learning:{c:"#0C447C",bg:"#E6F1FB",b:"#378ADD",li:"rgba(55,138,221,0.18)"},
@@ -208,8 +204,8 @@ const PM=[
   {lbl:"Long break", m:15,b:"#BA7517",bg:"#FAEEDA",c:"#633806"},
 ];
 const DEF=[
-  {id:1, g:"health",  l:"Drink water",                t:"progress",goal:5,unit:"bottles",step:1},
-  {id:10,g:"health",  l:"Exercise",                   t:"progress",goal:30,unit:"mins",step:10},
+  {id:1, g:"health",  l:"Drink water",                t:"progress",goal:5, unit:"bottles",step:1},
+  {id:10,g:"health",  l:"Exercise",                   t:"progress",goal:30,unit:"mins",   step:10},
   {id:2, g:"health",  l:"Sleep 8 hr",                 t:"check"},
   {id:3, g:"health",  l:"Meditate 10 mins",           t:"check"},
   {id:4, g:"learning",l:"Reading 30 mins",            t:"check"},
@@ -219,16 +215,15 @@ const DEF=[
   {id:8, g:"work",    l:"Working attentive to detail",t:"check"},
   {id:9, g:"work",    l:"Check my finance",           t:"check"},
 ];
-
-// Crown levels
 const CROWNS=[
-  {min:0,   max:200,  icon:"🎯", title:"Keep going!",    color:"#888"},
-  {min:200, max:500,  icon:"🥉", title:"Bronze Crown",   color:"#CD7F32"},
-  {min:500, max:1000, icon:"🥈", title:"Silver Crown",   color:"#A0A0A0"},
-  {min:1000,max:2000, icon:"🥇", title:"Gold Crown",     color:"#FFD700"},
-  {min:2000,max:99999,icon:"💎", title:"Diamond Crown",  color:"#00BFFF"},
+  {min:0,   max:200,  icon:"🎯",title:"Keep going!",  color:"#888"},
+  {min:200, max:500,  icon:"🥉",title:"Bronze Crown", color:"#CD7F32"},
+  {min:500, max:1000, icon:"🥈",title:"Silver Crown", color:"#A0A0A0"},
+  {min:1000,max:2000, icon:"🥇",title:"Gold Crown",   color:"#FFD700"},
+  {min:2000,max:99999,icon:"💎",title:"Diamond Crown",color:"#00BFFF"},
 ];
 
+// ── Storage ────────────────────────────────────────────────
 function store(k,v){
   const s=JSON.stringify(v);
   try{localStorage.setItem(k,s);}catch{}
@@ -244,52 +239,43 @@ function recall(k,def){
   try{return JSON.parse(v);}catch{return def;}
 }
 
+// ── Helpers ────────────────────────────────────────────────
 function tKey(){return new Date().toISOString().slice(0,10);}
-function monthKey(){const n=new Date();return `${n.getFullYear()}-${String(n.getMonth()+1).padStart(2,"0")}`;}
+function mKey(){const n=new Date();return n.getFullYear()+"-"+String(n.getMonth()+1).padStart(2,"0");}
 function pad(n){return String(n).padStart(2,"0");}
 
-// Reset today's data if it's a new day
-const lastOpenDay = recall("dt-last-open", null);
-if(lastOpenDay && lastOpenDay !== tKey()){
-  // New day — clear today's working data
-  td = {};
-  store("dt-day-"+tKey(), td);
-}
-store("dt-last-open", tKey());
+// ── State (declared ONCE) ──────────────────────────────────
+const TODAY = tKey();
+const MONTH = mKey();
 
-let targets=recall("dt-tgts",null)||JSON.parse(JSON.stringify(DEF));
-targets=targets.map(t=>t.id===10?{...t,l:"Exercise",t:"progress",goal:30,unit:"mins",step:10}:t);
+let targets = recall("dt-tgts",null)||JSON.parse(JSON.stringify(DEF));
+targets = targets.map(t=>t.id===10?{...t,l:"Exercise",t:"progress",goal:30,unit:"mins",step:10}:t);
 store("dt-tgts",targets);
-let history=recall("dt-hist",{});
-let td=recall("dt-day-"+tKey(),{});
-let scores=recall("dt-scores",{});  // {monthKey: totalPts}
-let dayPts=recall("dt-daypts",{});  // {dateKey: pts earned that day}
 
-// Reset scores if new month
-const curMonth=monthKey();
-if(!scores[curMonth])scores[curMonth]=0;
+let history = recall("dt-hist",{});
+let scores  = recall("dt-scores",{});
+let dayPts  = recall("dt-daypts",{});
+let td      = recall("dt-day-"+TODAY,{});
 
-// Auto-commit past days
-(function(){
-  try{
-    const keys=Object.keys(localStorage).filter(k=>k.startsWith("dt-day-"));
-    keys.forEach(k=>{
-      const day=k.replace("dt-day-","").replace("_b","");
-      if(day!==tKey()&&day.match(/^\d{4}-\d{2}-\d{2}$/)&&!history[day]){
-        const d=recall(k,null);
-        if(d&&Object.keys(d).length>0)history[day]=d;
-      }
-    });
-    store("dt-hist",history);
-  }catch{}
-})();
+// Initialise month score
+if(!scores[MONTH])scores[MONTH]=0;
 
+// Reset today's checks if new day
+const lastOpen = recall("dt-last-open",null);
+if(lastOpen && lastOpen!==TODAY){
+  td={};
+  store("dt-day-"+TODAY,td);
+}
+store("dt-last-open",TODAY);
+
+// ── Date header ────────────────────────────────────────────
 (function(){
   const n=new Date();
   document.getElementById("dayLbl").textContent=n.toLocaleDateString("en-US",{weekday:"long"}).toUpperCase();
   document.getElementById("dateSub").textContent=n.toLocaleDateString("en-US",{month:"long",day:"numeric",year:"numeric"});
 })();
 
+// ── View ───────────────────────────────────────────────────
 function setView(v){
   document.getElementById("v-today").style.display=v==="today"?"block":"none";
   document.getElementById("v-history").style.display=v==="history"?"block":"none";
@@ -297,88 +283,66 @@ function setView(v){
   if(v==="history")renderHist();
 }
 
+// ── Core logic ─────────────────────────────────────────────
 function isDone(t,d){const v=(d||td)[t.id]||0;return t.t==="check"?v===1:v>=(t.goal||1);}
-function score(d){if(!targets.length)return 0;return Math.round(targets.filter(t=>isDone(t,d)).length/targets.length*100);}
+function dayScore(d){if(!targets.length)return 0;return Math.round(targets.filter(t=>isDone(t,d)).length/targets.length*100);}
+function getCrown(pts){for(let i=CROWNS.length-1;i>=0;i--){if(pts>=CROWNS[i].min)return CROWNS[i];}return CROWNS[0];}
 
-// Calculate streak
 function calcStreak(){
-  const today=tKey();
-  const allDays=Object.keys(history).sort().reverse();
-  if(allDays.length===0)return{streak:0,best:0};
-
-  let streak=0,best=0,cur=0;
-  let checkDate=new Date();
-
-  // If today is saved, start from today, else start from yesterday
-  if(history[today]&&score(history[today])>0){
-    // start from today
-  } else {
-    checkDate.setDate(checkDate.getDate()-1);
+  let streak=0,best=0;
+  const d=new Date();
+  // Start from today if saved, else yesterday
+  if(!(history[TODAY]&&dayScore(history[TODAY])>0)) d.setDate(d.getDate()-1);
+  for(let i=0;i<90;i++){
+    const k=d.toISOString().slice(0,10);
+    if(history[k]&&dayScore(history[k])>0){streak++;best=Math.max(best,streak);}
+    else{if(i>0)break;}
+    d.setDate(d.getDate()-1);
   }
-
-  // Walk backwards day by day
-  for(let i=0;i<60;i++){
-    const key=checkDate.toISOString().slice(0,10);
-    if(history[key]&&score(history[key])>0){
-      cur++;
-      best=Math.max(best,cur);
-    } else {
-      if(i===0){cur=0;}
-      else break;
-    }
-    checkDate.setDate(checkDate.getDate()-1);
+  // Scan all for best streak with consecutive check
+  let tmpB=0,tmpC=0;
+  const sd=Object.keys(history).sort();
+  for(let i=0;i<sd.length;i++){
+    if(dayScore(history[sd[i]])>0){
+      if(i>0){const p=new Date(sd[i-1]+"T00:00:00"),c=new Date(sd[i]+"T00:00:00");if((c-p)/86400000>1)tmpC=0;}
+      tmpC++;tmpB=Math.max(tmpB,tmpC);
+    } else tmpC=0;
   }
-  streak=cur;
-  best=Math.max(best,streak);
-
-  // Also scan all history for best streak ever
-  let tempBest=0,tempCur=0;
-  const sortedDays=[...Object.keys(history)].sort();
-  for(let i=0;i<sortedDays.length;i++){
-    if(score(history[sortedDays[i]])>0){
-      tempCur++;
-      // Check if consecutive with previous day
-      if(i>0){
-        const prev=new Date(sortedDays[i-1]+"T00:00:00");
-        const curr=new Date(sortedDays[i]+"T00:00:00");
-        const diff=(curr-prev)/(1000*60*60*24);
-        if(diff>1)tempCur=1;
-      }
-      tempBest=Math.max(tempBest,tempCur);
-    } else {
-      tempCur=0;
-    }
-  }
-  best=Math.max(best,tempBest);
-  return{streak,best};
+  return{streak,best:Math.max(best,tmpB)};
 }
 
-// Crown logic
-function getCrown(pts){
-  for(let i=CROWNS.length-1;i>=0;i--){if(pts>=CROWNS[i].min)return CROWNS[i];}
-  return CROWNS[0];
+function calcDayPts(dayData,streakCount){
+  const tot=targets.length;
+  const done=targets.filter(t=>isDone(t,dayData)).length;
+  let pts=done*10-(tot-done)*5;
+  if(done===tot&&tot>0)pts+=20;
+  if(streakCount>=7)pts+=30;
+  else if(streakCount>=3)pts+=15;
+  return Math.max(pts,-50);
 }
 
+// ── Crown UI ───────────────────────────────────────────────
 function updateCrownUI(){
-  const pts=scores[curMonth]||0;
+  const pts=scores[MONTH]||0;
   const crown=getCrown(pts);
   const next=CROWNS.find(c=>c.min>pts)||CROWNS[CROWNS.length-1];
   document.getElementById("crownIcon").textContent=crown.icon;
   document.getElementById("crownTitle").textContent=crown.title;
   document.getElementById("crownScore").textContent=pts;
-  document.getElementById("crownScore").style.color=crown.color=="#888"?"#1D9E75":crown.color;
+  document.getElementById("crownScore").style.color=crown.color==="#888"?"#1D9E75":crown.color;
   if(pts>=2000){
     document.getElementById("crownSub").textContent="Maximum crown achieved! 💎";
     document.getElementById("ptsBar").style.width="100%";
     document.getElementById("ptsBar").style.background="#00BFFF";
   } else {
     document.getElementById("crownSub").textContent=`${next.min-pts} pts to ${next.title}`;
-    const pct=((pts-crown.min)/(next.min-crown.min)*100).toFixed(1);
+    const pct=Math.max(0,Math.min(100,((pts-crown.min)/(next.min-crown.min))*100));
     document.getElementById("ptsBar").style.width=pct+"%";
     document.getElementById("ptsBar").style.background=next.color==="#888"?"#1D9E75":next.color;
   }
 }
 
+// ── Ring ───────────────────────────────────────────────────
 function renderRing(){
   const done=targets.filter(t=>isDone(t,td)).length,tot=targets.length;
   const p=tot?done/tot:0,c=2*Math.PI*36;
@@ -387,14 +351,14 @@ function renderRing(){
   document.getElementById("cntLbl").textContent=done+"/"+tot;
 }
 
+// ── Target list ────────────────────────────────────────────
 function renderList(){
   const el=document.getElementById("tList");el.innerHTML="";
   ["health","learning","work"].forEach(gid=>{
     const g=G[gid];
     targets.filter(t=>t.g===gid).forEach(t=>{
       const val=td[t.id]||0,done=isDone(t,td);
-      const w=document.createElement("div");
-      w.className="t-item";
+      const w=document.createElement("div");w.className="t-item";
       w.style.borderLeftColor=g.b;
       w.style.background=done?g.bg:"#fff";
       w.style.borderColor=done?g.li:"rgba(0,0,0,0.06)";
@@ -421,91 +385,68 @@ function renderList(){
       }
       const rm=document.createElement("button");rm.className="rm";rm.textContent="×";
       rm.onclick=()=>{targets=targets.filter(x=>x.id!==t.id);store("dt-tgts",targets);renderRing();renderList();};
-      w.appendChild(rm);
-      el.appendChild(w);
+      w.appendChild(rm);el.appendChild(w);
     });
   });
 }
 
-function doCheck(id){td[id]=td[id]?0:1;store("dt-day-"+tKey(),td);renderRing();renderList();}
-function doProgress(id,d,goal){td[id]=Math.max(0,Math.min(goal,(td[id]||0)+d));store("dt-day-"+tKey(),td);renderRing();renderList();}
+function doCheck(id){td[id]=td[id]?0:1;store("dt-day-"+TODAY,td);renderRing();renderList();}
+function doProgress(id,delta,goal){td[id]=Math.max(0,Math.min(goal,(td[id]||0)+delta));store("dt-day-"+TODAY,td);renderRing();renderList();}
 
-// Calculate points for a day
-function calcDayPts(dayData, streakCount){
-  let pts=0;
-  const tot=targets.length;
-  const done=targets.filter(t=>isDone(t,dayData)).length;
-  const missed=tot-done;
-  pts += done * 10;
-  pts -= missed * 5;
-  if(done===tot && tot>0) pts+=20;
-  if(streakCount>=7) pts+=30;
-  else if(streakCount>=3) pts+=15;
-  // Never return less than -50 per day
-  return Math.max(pts,-50);
-}
-
-function showScorePopup(pts, totalPts, streak, prevCrown, newCrown){
-  const ov=document.createElement("div");ov.className="overlay";
-  const pop=document.createElement("div");pop.className="score-popup";
-  const crownChanged=prevCrown.title!==newCrown.title&&newCrown.min>0;
-  let html=`<h2>Today's result</h2>`;
-  if(pts>=0){html+=`<div class="pts" style="color:#1D9E75">+${pts} pts</div>`;}
-  else{html+=`<div class="pts" style="color:#E53935">${pts} pts</div>`;}
-  html+=`<p>Monthly total: <strong>${totalPts} pts</strong><br>Streak: <strong>${streak} days 🔥</strong></p>`;
-  if(crownChanged){html+=`<div class="crown-earned">${newCrown.icon}</div><p style="color:${newCrown.color};font-weight:600">You earned the ${newCrown.title}!</p>`;}
-  html+=`<button onclick="this.closest('.score-popup').remove();document.querySelector('.overlay').remove()">Awesome!</button>`;
-  pop.innerHTML=html;
-  document.body.appendChild(ov);document.body.appendChild(pop);
-  ov.onclick=()=>{pop.remove();ov.remove();};
-}
-
+// ── Save ───────────────────────────────────────────────────
 function saveDay(){
-  const key=tKey();
-  const prevCrown=getCrown(scores[curMonth]||0);
+  const prevCrown=getCrown(scores[MONTH]||0);
 
-  // Calculate streak
+  // Calculate streak including today
   let streak=0;
-  const checkD=new Date();
-  for(let i=0;i<60;i++){
-    const k=checkD.toISOString().slice(0,10);
-    const d=k===key?td:history[k];
-    if(d&&score(d)>0){streak++;}
+  const d=new Date();
+  for(let i=0;i<90;i++){
+    const k=d.toISOString().slice(0,10);
+    const data=k===TODAY?td:history[k];
+    if(data&&dayScore(data)>0){streak++;}
     else if(i>0){break;}
-    checkD.setDate(checkD.getDate()-1);
+    d.setDate(d.getDate()-1);
   }
 
   const newPts=calcDayPts(td,streak);
-  if(!scores[curMonth])scores[curMonth]=0;
 
-  // Remove previous save for today if exists, apply new
-  const prevPts=dayPts[key]!==undefined?dayPts[key]:null;
+  // Update score: remove previous today's pts first
+  const prevPts=dayPts[TODAY]!==undefined?dayPts[TODAY]:null;
   if(prevPts!==null){
-    scores[curMonth]=Math.max(0,scores[curMonth]-prevPts+newPts);
+    scores[MONTH]=Math.max(0,scores[MONTH]-prevPts+newPts);
   } else {
-    scores[curMonth]=Math.max(0,scores[curMonth]+newPts);
+    scores[MONTH]=Math.max(0,scores[MONTH]+newPts);
   }
-  dayPts[key]=newPts;
+  dayPts[TODAY]=newPts;
+  history[TODAY]={...td};
 
-  // Save everything
-  history[key]={...td};
   store("dt-hist",history);
-  store("dt-tgts",targets);
   store("dt-scores",scores);
   store("dt-daypts",dayPts);
+  store("dt-tgts",targets);
 
-  const newCrown=getCrown(scores[curMonth]);
   updateCrownUI();
-  showScorePopup(newPts,scores[curMonth],streak,prevCrown,newCrown);
+
+  // Show popup
+  const newCrown=getCrown(scores[MONTH]);
+  const crownChanged=prevCrown.title!==newCrown.title&&newCrown.min>0;
+  const ov=document.createElement("div");ov.className="overlay";
+  const pop=document.createElement("div");pop.className="score-popup";
+  let html=`<h2>Today's result</h2>`;
+  html+=`<div class="pts" style="color:${newPts>=0?"#1D9E75":"#E53935"}">${newPts>=0?"+":""}${newPts} pts</div>`;
+  html+=`<p>Monthly total: <strong>${scores[MONTH]} pts</strong><br>Streak: <strong>${streak} day${streak!==1?"s":""} 🔥</strong></p>`;
+  if(crownChanged)html+=`<div class="crown-earned">${newCrown.icon}</div><p style="color:${newCrown.color};font-weight:600">You earned the ${newCrown.title}!</p>`;
+  html+=`<button onclick="this.closest('.score-popup').remove();document.querySelector('.overlay').remove();renderHist();">Awesome!</button>`;
+  pop.innerHTML=html;
+  document.body.appendChild(ov);document.body.appendChild(pop);
+  ov.onclick=()=>{pop.remove();ov.remove();};
 
   const b=document.getElementById("svBtn");
   b.textContent="✓ Saved!";b.style.background="#0F6E56";
   setTimeout(()=>{b.textContent="💾 Save today";b.style.background="#1D9E75";},2000);
-
-  // Refresh history if open
-  if(document.getElementById("v-history").style.display!=="none")renderHist();
 }
 
+// ── Add form ───────────────────────────────────────────────
 function openForm(){const f=document.getElementById("addForm");f.style.display="flex";f.style.flexDirection="column";}
 function closeForm(){document.getElementById("addForm").style.display="none";}
 function togGoal(){document.getElementById("fGoalRow").style.display=document.getElementById("fType").value==="progress"?"flex":"none";}
@@ -520,22 +461,32 @@ function addTarget(){
   closeForm();renderRing();renderList();
 }
 
+// ── History ────────────────────────────────────────────────
 function renderHist(){
+  // Always reload fresh from storage
+  history=recall("dt-hist",{});
+  dayPts=recall("dt-daypts",{});
+  scores=recall("dt-scores",{});
+
   const {streak,best}=calcStreak();
   document.getElementById("hStreak").textContent=streak;
   document.getElementById("hBestStreak").textContent=best;
-  document.getElementById("hMonthPts").textContent=scores[curMonth]||0;
+  document.getElementById("hMonthPts").textContent=scores[MONTH]||0;
 
-  // Include today if it has been saved
-  const allDays=[...new Set([...Object.keys(history), ...(history[tKey()]?[tKey()]:[])])].sort();
+  const histDays=Object.keys(history).sort();
   const canvas=document.getElementById("hChart"),empty=document.getElementById("hEmpty");
-  if(days.length>=1){canvas.style.display="block";empty.style.display="none";drawChart(canvas,days.map(d=>({date:d,s:score(history[d])})));}
-  else{canvas.style.display="none";empty.style.display="block";}
+
+  if(histDays.length>=1){
+    canvas.style.display="block";empty.style.display="none";
+    drawChart(canvas,histDays.map(d=>({date:d,s:dayScore(history[d])})));
+  } else {
+    canvas.style.display="none";empty.style.display="block";
+  }
 
   const list=document.getElementById("hList");list.innerHTML="";
   const tot=targets.length;
-  [...days].reverse().slice(0,30).forEach(day=>{
-    const d=history[day]||{},sc=score(d),dn=targets.filter(t=>isDone(t,d)).length;
+  [...histDays].reverse().slice(0,30).forEach(day=>{
+    const d=history[day]||{},sc=dayScore(d),dn=targets.filter(t=>isDone(t,d)).length;
     const pts=dayPts[day]||0;
     const dt=new Date(day+"T00:00:00");
     const ds=dt.toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric"});
@@ -543,12 +494,11 @@ function renderHist(){
     const scC=sc===100?"#0F6E56":sc>=50?"#633806":"#aaa";
     const barC=sc===100?"#1D9E75":"#BA7517";
     const ptsC=pts>=0?"#0F6E56":"#E53935";
-    const ptsStr=pts>=0?"+"+pts:String(pts);
     const row=document.createElement("div");row.className="h-item";
     row.innerHTML=`<div class="h-dot" style="background:${dotC}"></div>
       <div class="h-date">${ds}</div>
       <div class="h-score" style="color:${scC}">${sc}%</div>
-      <div class="h-pts" style="color:${ptsC};font-size:12px;font-weight:600;min-width:52px;text-align:right">${ptsStr} pts</div>
+      <div class="h-pts" style="color:${ptsC}">${pts>=0?"+":""}${pts} pts</div>
       <div class="h-bar-w"><div class="h-bar" style="width:${sc}%;background:${barC}"></div></div>`;
     list.appendChild(row);
   });
@@ -580,8 +530,8 @@ function drawChart(canvas,data){
   });
 }
 
-// Pomodoro
-let pIdx=0,pSecs=25*60,pRun=false,pTimer=null,pSess=recall("dt-pomo-sess-"+tKey(),0),audioCtx=null,pStartTime=null;
+// ── Pomodoro ───────────────────────────────────────────────
+let pIdx=0,pSecs=25*60,pRun=false,pTimer=null,pSess=recall("dt-pomo-sess-"+TODAY,0),audioCtx=null,pStartTime=null;
 const PC=2*Math.PI*44;
 
 function unlockAudio(){
@@ -622,10 +572,9 @@ function startTimer(){
   pStartTime=Date.now();
   store("dt-pomo-start",pStartTime);
   store("dt-pomo-secs",pSecs);
-  store("dt-pomo-idx",pIdx);
   pTimer=setInterval(()=>{
     if(pSecs>0){pSecs--;}
-    else{clearInterval(pTimer);pRun=false;pStartTime=null;store("dt-pomo-start",null);if(pIdx===0){pSess++;store("dt-pomo-sess-"+tKey(),pSess);}beep();flash();showTimeout();}
+    else{clearInterval(pTimer);pRun=false;pStartTime=null;store("dt-pomo-start",null);if(pIdx===0){pSess++;store("dt-pomo-sess-"+TODAY,pSess);}beep();flash();showTimeout();}
     updPomo();
   },1000);
 }
@@ -664,26 +613,32 @@ function rstPomo(){
   store("dt-pomo-start",null);updPomo();
 }
 
+// ── Visibility / page hide ─────────────────────────────────
 document.addEventListener("visibilitychange",()=>{
   if(document.visibilityState==="visible"&&pRun&&pStartTime){
     clearInterval(pTimer);
     const elapsed=Math.floor((Date.now()-pStartTime)/1000);
     const savedSecs=recall("dt-pomo-secs",pSecs);
     pSecs=Math.max(0,savedSecs-elapsed);
-          if(pSecs<=0){pRun=false;pStartTime=null;store("dt-pomo-start",null);if(pIdx===0){pSess++;store("dt-pomo-sess-"+tKey(),pSess);}beep();flash();showTimeout();updPomo();}
+    if(pSecs<=0){pRun=false;pStartTime=null;store("dt-pomo-start",null);if(pIdx===0){pSess++;store("dt-pomo-sess-"+TODAY,pSess);}beep();flash();showTimeout();updPomo();}
     else{pStartTime=Date.now();store("dt-pomo-start",pStartTime);store("dt-pomo-secs",pSecs);startTimer();}
   }
   if(document.visibilityState==="hidden"){
-    store("dt-day-"+tKey(),td);store("dt-tgts",targets);store("dt-hist",history);
+    store("dt-day-"+TODAY,td);store("dt-tgts",targets);store("dt-hist",history);
+    store("dt-scores",scores);store("dt-daypts",dayPts);
     if(pRun){store("dt-pomo-secs",pSecs);store("dt-pomo-start",pStartTime);}
   }
 });
 window.addEventListener("pagehide",()=>{
-  store("dt-day-"+tKey(),td);store("dt-tgts",targets);store("dt-hist",history);
+  store("dt-day-"+TODAY,td);store("dt-tgts",targets);store("dt-hist",history);
   store("dt-scores",scores);store("dt-daypts",dayPts);
 });
 
-renderRing();renderList();updPomo();updateCrownUI();
+// ── Init ───────────────────────────────────────────────────
+renderRing();
+renderList();
+updPomo();
+updateCrownUI();
 </script>
 </body>
 </html>
