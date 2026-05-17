@@ -7,7 +7,8 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Daily Targets">
 <meta name="theme-color" content="#1D9E75">
-<link rel="apple-touch-icon" sizes="180x180" href="icon.png"><title>Daily Targets</title>
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 380 380'%3E%3Crect x='40' y='40' width='300' height='300' rx='64' fill='%231D9E75'/%3E%3Ccircle cx='190' cy='190' r='80' fill='none' stroke='white' stroke-width='9' opacity='0.35'/%3E%3Ccircle cx='190' cy='190' r='54' fill='none' stroke='white' stroke-width='9' opacity='0.6'/%3E%3Ccircle cx='190' cy='190' r='28' fill='none' stroke='white' stroke-width='9' opacity='0.9'/%3E%3Ccircle cx='190' cy='190' r='11' fill='%23FF8A80'/%3E%3Cline x1='190' y1='80' x2='190' y2='102' stroke='white' stroke-width='6' stroke-linecap='round' opacity='0.4'/%3E%3Cline x1='190' y1='278' x2='190' y2='300' stroke='white' stroke-width='6' stroke-linecap='round' opacity='0.4'/%3E%3Cline x1='80' y1='190' x2='102' y2='190' stroke='white' stroke-width='6' stroke-linecap='round' opacity='0.4'/%3E%3Cline x1='278' y1='190' x2='300' y2='190' stroke='white' stroke-width='6' stroke-linecap='round' opacity='0.4'/%3E%3C/svg%3E">
+<title>Daily Targets</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f5f5f0;color:#1a1a1a;min-height:100vh}
@@ -189,7 +190,7 @@ h1{font-size:22px;font-weight:600;margin-bottom:2px}
     <div class="h-box">
       <div class="h-box-title">Completion over time</div>
       <canvas id="hChart" width="440" height="200" style="width:100%;height:auto;display:none"></canvas>
-      <div id="hEmpty" class="empty">Save on 2+ days to see chart</div>
+      <div id="hEmpty" class="empty">Save your first day to see the chart</div>
     </div>
     <div id="hList"></div>
   </div>
@@ -432,14 +433,21 @@ function saveDay(){
     else break;
   }
 
-  const pts=calcDayPts(td,streak);
+  const newPts=calcDayPts(td,streak);
 
-  // Update monthly score
+  // If already saved today, reverse previous points first then apply new
   if(!scores[curMonth])scores[curMonth]=0;
-  scores[curMonth]=Math.max(0,scores[curMonth]+pts);
+  const prevPts=dayPts[key]||null;
+  if(prevPts!==null){
+    // Remove old points, apply new points
+    scores[curMonth]=Math.max(0, scores[curMonth]-prevPts+newPts);
+  } else {
+    // First save of the day
+    scores[curMonth]=Math.max(0, scores[curMonth]+newPts);
+  }
 
   // Save day pts
-  dayPts[key]=pts;
+  dayPts[key]=newPts;
 
   // Save history
   history[key]={...td};
@@ -450,7 +458,7 @@ function saveDay(){
 
   const newCrown=getCrown(scores[curMonth]);
   updateCrownUI();
-  showScorePopup(pts, scores[curMonth], streak, prevCrown, newCrown);
+  showScorePopup(newPts, scores[curMonth], streak, prevCrown, newCrown);
 
   const b=document.getElementById("svBtn");
   b.textContent="✓ Saved!";b.style.background="#0F6E56";
@@ -479,7 +487,7 @@ function renderHist(){
 
   const days=Object.keys(history).sort();
   const canvas=document.getElementById("hChart"),empty=document.getElementById("hEmpty");
-  if(days.length>=2){canvas.style.display="block";empty.style.display="none";drawChart(canvas,days.map(d=>({date:d,s:score(history[d])})));}
+  if(days.length>=1){canvas.style.display="block";empty.style.display="none";drawChart(canvas,days.map(d=>({date:d,s:score(history[d])})));}
   else{canvas.style.display="none";empty.style.display="block";}
 
   const list=document.getElementById("hList");list.innerHTML="";
@@ -515,11 +523,13 @@ function drawChart(canvas,data){
     ctx.fillStyle=tc;ctx.font="11px -apple-system,sans-serif";ctx.textAlign="right";ctx.fillText(v+"%",p.l-4,y+4);
   });
   const pts=data.map((d,i)=>({x:p.l+(i/Math.max(data.length-1,1))*iW,y:p.t+iH-(d.s/100)*iH}));
-  ctx.beginPath();pts.forEach((pt,i)=>i===0?ctx.moveTo(pt.x,pt.y):ctx.lineTo(pt.x,pt.y));
-  ctx.lineTo(pts[pts.length-1].x,p.t+iH);ctx.lineTo(pts[0].x,p.t+iH);ctx.closePath();
-  ctx.fillStyle="rgba(29,158,117,0.12)";ctx.fill();
-  ctx.beginPath();pts.forEach((pt,i)=>i===0?ctx.moveTo(pt.x,pt.y):ctx.lineTo(pt.x,pt.y));
-  ctx.strokeStyle="#1D9E75";ctx.lineWidth=2;ctx.lineJoin="round";ctx.stroke();
+  if(data.length>1){
+    ctx.beginPath();pts.forEach((pt,i)=>i===0?ctx.moveTo(pt.x,pt.y):ctx.lineTo(pt.x,pt.y));
+    ctx.lineTo(pts[pts.length-1].x,p.t+iH);ctx.lineTo(pts[0].x,p.t+iH);ctx.closePath();
+    ctx.fillStyle="rgba(29,158,117,0.12)";ctx.fill();
+    ctx.beginPath();pts.forEach((pt,i)=>i===0?ctx.moveTo(pt.x,pt.y):ctx.lineTo(pt.x,pt.y));
+    ctx.strokeStyle="#1D9E75";ctx.lineWidth=2;ctx.lineJoin="round";ctx.stroke();
+  }
   pts.forEach((pt,i)=>{
     ctx.beginPath();ctx.arc(pt.x,pt.y,4,0,Math.PI*2);ctx.fillStyle="#1D9E75";ctx.fill();
     const dt=new Date(data[i].date+"T00:00:00");
