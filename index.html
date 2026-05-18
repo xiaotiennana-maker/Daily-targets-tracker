@@ -8,18 +8,7 @@
 <meta name="apple-mobile-web-app-title" content="Daily Targets">
 <meta name="theme-color" content="#1D9E75">
 <link rel="apple-touch-icon" href="icon.png">
-<link rel="icon" type="image/png" href="icon.png">(function(){
-  const c=document.createElement("canvas");c.width=512;c.height=512;
-  const x=c.getContext("2d"),s=512,cx=256,cy=256;
-  function rr(a,b,w,h,r){x.beginPath();x.moveTo(a+r,b);x.lineTo(a+w-r,b);x.arcTo(a+w,b,a+w,b+r,r);x.lineTo(a+w,b+h-r);x.arcTo(a+w,b+h,a+w-r,b+h,r);x.lineTo(a+r,b+h);x.arcTo(a,b+h,a,b+h-r,r);x.lineTo(a,b+r);x.arcTo(a,b,a+r,b,r);x.closePath();}
-  rr(0,0,s,s,112);x.fillStyle="#1D9E75";x.fill();
-  [[108,"rgba(255,255,255,0.35)"],[73,"rgba(255,255,255,0.6)"],[38,"rgba(255,255,255,0.9)"]].forEach(([r,col])=>{x.beginPath();x.arc(cx,cy,r,0,Math.PI*2);x.strokeStyle=col;x.lineWidth=13;x.stroke();});
-  x.beginPath();x.arc(cx,cy,15,0,Math.PI*2);x.fillStyle="#FF8A80";x.fill();
-  [[cx,40,cx,110],[cx,402,cx,472],[40,cy,110,cy],[402,cy,472,cy]].forEach(([a,b,c,d])=>{x.beginPath();x.moveTo(a,b);x.lineTo(c,d);x.strokeStyle="rgba(255,255,255,0.4)";x.lineWidth=8;x.lineCap="round";x.stroke();});
-  const url=c.toDataURL("image/png");
-  document.write('<link rel="apple-touch-icon" href="'+url+'"><link rel="icon" href="'+url+'">');
-})();
-</script>
+<link rel="icon" type="image/png" href="icon.png">
 <title>Daily Targets</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
